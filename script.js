@@ -22,39 +22,46 @@ const posts = [
 ];
 const resources = [
   {
-    title: "Web Pentest Checklist [Comming Soon]",
-    desc: "A practical checklist for recon through reporting.",
+    title: "Web Pentest Checklist [Coming Soon]",
+    desc: "A practical checklist for recon through reporting",
     price: "Free",
     url: "https://gumroad.com/",
   },
   {
-    title: "Bug Bounty Recon Cheatsheet [Comming Soon]",
-    desc: "Tools, one-liners and workflows for fast recon.",
+    title: "Bug Bounty Recon Cheatsheet [Coming Soon]",
+    desc: "Tools, one-liners and workflows for fast recon",
     price: "Free",
-    url: "https://gumroad.com/",
-  },
-  {
-    title: "Red Team Playbook",
-    desc: "Operational notes, payload templates and reporting kit.",
-    price: "$39",
     url: "https://gumroad.com/",
   },
 ];
 const skills = ["Web & API", "VAPT", "Bug Bounty"];
 const links = [
-  { label: "Medium", url: "https://darkoffense.medium.com/" },
-  { label: "GitHub", url: "https://github.com/huzaifaxmalik" },
-  ,
-  { label: "LinkedIn", url: "https://linkedin.com/in/huzaifa-x-malik" },
+  {
+    label: "Medium",
+    url: "https://darkoffense.medium.com/",
+  },
+  {
+    label: "GitHub",
+    url: "https://github.com/huzaifaxmalik",
+  },
+  {
+    label: "LinkedIn",
+    url: "https://linkedin.com/in/huzaifa-x-malik",
+  },
   //{ label: "Email", url: "mailto:business@mail.com" },
 ];
 /* =================================== */
-
 const $ = (s) => document.querySelector(s);
 const esc = (s) =>
   String(s).replace(
     /[&<>"]/g,
-    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c],
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+      })[c],
   );
 const store = {
   get(k) {
@@ -70,7 +77,6 @@ const store = {
     } catch (e) {}
   },
 };
-
 /* Theme */
 function applyTheme(mode) {
   const r = document.documentElement;
@@ -87,9 +93,9 @@ $("#theme").addEventListener("click", (e) => {
   if (b) applyTheme(b.dataset.mode);
 });
 applyTheme(store.get("theme") || "system");
-
 /* Tabs */
 const tabs = ["posts", "about", "resources"];
+
 function show(id) {
   if (!tabs.includes(id)) id = "posts";
   tabs.forEach((t) => ($("#" + t).hidden = t !== id));
@@ -103,7 +109,6 @@ document.querySelector("nav").addEventListener("click", (e) => {
   if (b) show(b.dataset.tab);
 });
 window.addEventListener("hashchange", () => show(location.hash.slice(1)));
-
 /* Posts */
 function renderPosts(list) {
   $("#postGrid").innerHTML = list
@@ -132,7 +137,7 @@ if (MEDIUM_USER && location.protocol.startsWith("http")) {
             url: i.link,
             tags: (i.categories || []).slice(0, 3),
             desc:
-              i.description
+              (i.description || "")
                 .replace(/<[^>]*>/g, "")
                 .slice(0, 140)
                 .trim() + "...",
@@ -141,7 +146,6 @@ if (MEDIUM_USER && location.protocol.startsWith("http")) {
     })
     .catch(() => {});
 }
-
 /* Resources */
 function renderRes(f) {
   $("#resGrid").innerHTML = resources
@@ -163,7 +167,6 @@ $("#filters").addEventListener("click", (e) => {
   renderRes(b.dataset.f);
 });
 renderRes("all");
-
 /* About */
 $("#skills").innerHTML = skills
   .map((s) => `<span class="tag mono">${esc(s)}</span>`)
@@ -175,5 +178,4 @@ $("#links").innerHTML = links
   )
   .join("");
 $("#yr").textContent = new Date().getFullYear();
-
 show(location.hash.slice(1));
