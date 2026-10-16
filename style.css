@@ -69,6 +69,14 @@ header {
   align-items: center;
   gap: 16px;
 }
+.brand {
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.brand span {
+  color: var(--accent);
+}
 nav {
   display: flex;
   gap: 4px;
