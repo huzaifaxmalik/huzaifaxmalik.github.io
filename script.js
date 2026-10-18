@@ -1,5 +1,5 @@
 /* ===== CONTENT HERE ===== */
-const MEDIUM_USER = "darkoffense"; // loads latest posts via RSS when hosted on domain; falls back to the list below
+// Add each Medium post manually: title, desc, tags and url
 const posts = [
   {
     title: "SQHell: Manual SQL injection with detailed explanation",
@@ -38,17 +38,20 @@ const skills = ["Web & API", "VAPT", "Bug Bounty"];
 const links = [
   {
     label: "Medium",
+    icon: "simple-icons:medium",
     url: "https://darkoffense.medium.com/",
   },
   {
     label: "GitHub",
+    icon: "simple-icons:github",
     url: "https://github.com/huzaifaxmalik",
   },
   {
     label: "LinkedIn",
+    icon: "fa6-brands:linkedin",
     url: "https://linkedin.com/in/huzaifa-x-malik",
   },
-  //{ label: "Email", url: "mailto:business@mail.com" },
+  // { label: "Email", icon: "simple-icons:gmail", url: "mailto:business@mail.com" },
 ];
 /* =================================== */
 const $ = (s) => document.querySelector(s);
@@ -123,29 +126,6 @@ function renderPosts(list) {
     .join("");
 }
 renderPosts(posts);
-if (MEDIUM_USER && location.protocol.startsWith("http")) {
-  fetch(
-    "https://api.rss2json.com/v1/api.json?rss_url=" +
-      encodeURIComponent("https://medium.com/feed/@" + MEDIUM_USER),
-  )
-    .then((r) => r.json())
-    .then((d) => {
-      if (d.items && d.items.length)
-        renderPosts(
-          d.items.slice(0, 12).map((i) => ({
-            title: i.title,
-            url: i.link,
-            tags: (i.categories || []).slice(0, 3),
-            desc:
-              (i.description || "")
-                .replace(/<[^>]*>/g, "")
-                .slice(0, 140)
-                .trim() + "...",
-          })),
-        );
-    })
-    .catch(() => {});
-}
 /* Resources */
 function renderRes(f) {
   $("#resGrid").innerHTML = resources
@@ -174,8 +154,13 @@ $("#skills").innerHTML = skills
 $("#links").innerHTML = links
   .map(
     (l) =>
-      `<a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`,
+      `<a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">${
+        l.icon
+          ? `<span class="iconify" data-icon="${esc(l.icon)}" aria-hidden="true"></span>`
+          : ""
+      }<span>${esc(l.label)}</span></a>`,
   )
   .join("");
+if (window.Iconify && Iconify.scan) Iconify.scan();
 $("#yr").textContent = new Date().getFullYear();
 show(location.hash.slice(1));
