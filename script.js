@@ -37,17 +37,17 @@ const resources = [
 const skills = ["Web & API", "VAPT", "Bug Bounty"];
 const links = [
   {
-    label: "Medium",
+    label: " Medium",
     icon: "simple-icons:medium",
     url: "https://darkoffense.medium.com/",
   },
   {
-    label: "GitHub",
+    label: " GitHub",
     icon: "simple-icons:github",
     url: "https://github.com/huzaifaxmalik",
   },
   {
-    label: "LinkedIn",
+    label: " LinkedIn",
     icon: "fa6-brands:linkedin",
     url: "https://linkedin.com/in/huzaifa-x-malik",
   },
